@@ -1,18 +1,15 @@
+import os
 import subprocess
-import platform
 
 
-# Installation script for pipreqs package
 def install_pipreqs():
-    python_executable = "venv/bin/python" if platform.system() != "Windows" else "venv/Scripts/python"
+    current_working_directory = os.getcwd()
 
-    subprocess.run([python_executable, "-m", "pip", "install", "pipreqs"])
-
-
-def main():
-    install_pipreqs()
-    print("pipreqs installed.")
+    subprocess.run(["pip", "install", "pipreqs"])
+    print("pipreqs installed.\n")
+    subprocess.run(["pipreqs", current_working_directory])
+    print("pipreqs generated requirements.txt.\n")
 
 
 if __name__ == "__main__":
-    main()
+    install_pipreqs()
