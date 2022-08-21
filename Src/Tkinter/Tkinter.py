@@ -55,13 +55,13 @@ class TkinterWindow:
     def update_output_label(self, text):
         if text:
             self.output_label.configure(text=text)
-            self.output_timer_label.configure(text=f"Output label updated at: "
-                                                   f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}")
+            self.output_timer_label.configure(text=f'Output label updated at: '
+                                                   f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
             self.tk_.update()
 
     def update_input_label(self, text):
         if text:
             self.input_label.configure(text=text)
-            self.input_timer_label.configure(text=f"Input label updated at: "
-                                                  f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}")
+            self.input_timer_label.configure(text=f'Input label updated at: '
+                                                  f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
             self.tk_.update()
