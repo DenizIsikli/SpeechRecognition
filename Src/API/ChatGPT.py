@@ -1,4 +1,5 @@
-# import aiohttp
+
+import aiohttp
 from Src.Tkinter import Tkinter as Tk
 from TTS import Texttospeech as Tts
 
@@ -12,7 +13,7 @@ class ChatGPT:
         self.tts_ = Tts.TextToSpeech()
         self.tts = self.tts_.tts
 
-    def chat_gpt(self, *, command: str = None):
+    async def chat_gpt(self, *, command: str = None):
         if command is None:
             self.tts("Please provide text when using the command")
             self.tk.output_label("Please provide text when using the command")
@@ -29,7 +30,7 @@ class ChatGPT:
             async with aiohttp.ClientSession() as session:
                 async with session.post(self.API, json=payload, headers=headers) as response:
                     response.raise_for_status()  # Raise an exception if the request was not successful
-                    response_data = response.json()
+                    response_data = await response.json()
 
                     ai_response = response_data.get('answer', 'No response from the AI')
 
