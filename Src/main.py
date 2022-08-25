@@ -1,5 +1,5 @@
-import listener as ls
+from Listener import Listener as Ls
 
 if __name__ == "__main__":
-    listener = ls.Listener()
+    listener = Ls.Listener()
     listener.listen()
