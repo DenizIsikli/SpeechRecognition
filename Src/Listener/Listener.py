@@ -1,8 +1,8 @@
 import speech_recognition as sr
 import subprocess as sp
-import texttospeech as tts
+from TTS import Texttospeech as Tts
 import commandlist as cl
-import Tkinter as Tk
+from Tkinter import Tkinter as Tk
 
 
 class Listener:
@@ -14,7 +14,7 @@ class Listener:
         self.recognizer = sr.Recognizer()
 
         # Text to speech command
-        self.tts_ = tts.TextToSpeech()
+        self.tts_ = Tts.TextToSpeech()
         self.tts = self.tts_.tts
 
         # Define a dictionary for commands
