@@ -2,6 +2,7 @@ import subprocess
 import platform
 
 
+# Installation script for pipreqs package
 def install_pipreqs():
     python_executable = "venv/bin/python" if platform.system() != "Windows" else "venv/Scripts/python"
 
