@@ -18,10 +18,10 @@ class TkinterWindow:
 
         # Labels
         self.output_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.output_label.pack()
+        self.output_label.grid(row=0, column=0, padx=10, pady=10)
 
         self.input_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.input_label.pack()
+        self.input_label.grid(row=1, column=0, padx=10, pady=10)
 
     def update_output_label(self, text):
         if text:

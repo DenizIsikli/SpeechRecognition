@@ -1,15 +1,21 @@
 import speech_recognition as sr
 import subprocess as sp
-import pyttsx3
+import texttospeech as tts
 import commandlist as cl
-import Tkinter as tk
-import time
+import Tkinter as Tk
 
 
-class Listener():
+class Listener:
     def __init__(self):
-        self.tk_ = tk.TkinterWindow()
+        # Tkinter configuration
+        self.tk_ = Tk.TkinterWindow()
+
+        # Text to speech configuration
         self.recognizer = sr.Recognizer()
+
+        # Text to speech command
+        self.tts_ = tts.TextToSpeech()
+        self.tts = self.tts_.tts
 
         # Define a dictionary for commands
         self.command_list_ = cl.CommandList()
@@ -23,13 +29,6 @@ class Listener():
                 return True
         except OSError:
             return False
-
-    @staticmethod
-    def tts(text):
-        engine = pyttsx3.init()
-        engine.say(text)
-        engine.runAndWait()
-        time.sleep(2)
 
     def listen(self):
         if not self.has_microphone():
@@ -70,7 +69,7 @@ class Listener():
 
             try:
                 audio = self.recognizer.listen(source)
-                command= self.recognizer.recognize_google(audio)
+                command = self.recognizer.recognize_google(audio)
 
                 if command in self.command_list:
                     sp.Popen(self.command_list[command])
