@@ -2,15 +2,13 @@ import speech_recognition as sr
 import subprocess as sp
 import pyttsx3
 import commandlist as cl
-import Tkinter as Tk
+import Tkinter as tk
 import time
 
 
-class Listener(Tk):
+class Listener():
     def __init__(self):
-        # Base Class
-        self.bc = super().__init__()
-
+        self.tk_ = tk.TkinterWindow()
         self.recognizer = sr.Recognizer()
 
         # Define a dictionary for commands
@@ -21,7 +19,7 @@ class Listener(Tk):
     def has_microphone():
         # Check if the user has a microphone
         try:
-            with sr.Microphone() as _:
+            with sr.Microphone():
                 return True
         except OSError:
             return False
@@ -35,49 +33,55 @@ class Listener(Tk):
 
     def listen(self):
         if not self.has_microphone():
-            self.tts("No microphone found. Please connect a microphone.")
-            self.bc.update_output_label("No microphone found. Please connect a microphone.")
-            self.bc.clear_label()
+            self.tts("No microphone detected")
+            self.tk_.update_output_label("No microphone detected")
+            self.tk_.clear_label()
 
         microphone_index = 0
 
-        with sr.Microphone(device_index=microphone_index) as mic:
-            self.tts("Listening...")
-            self.bc.update_output_label("Listening...")
-            self.bc.clear_label()
+        with sr.Microphone(device_index=microphone_index) as source:
+            self.tts("Call Bobby to start the program")
+            self.tk_.update_output_label("Call Bobby to start the program")
+            self.tk_.clear_label()
 
             try:
-                audio = self.recognizer.listen(mic)
+                audio = self.recognizer.listen(source)
+                call_assistant = self.recognizer.recognize_google(audio)
+
+                if self.command_list_.wake_word in call_assistant:
+                    self.process_command()
+                    self.tts("Assistant is ready")
+                    self.tk_.update_output_label("Assistant is ready")
+                    self.tk_.clear_label()
+                else:
+                    self.tts("Wake word not recognized")
+                    self.tk_.update_output_label("Wake word not recognized")
+                    self.tk_.clear_label()
             except sr.WaitTimeoutError:
                 self.tts("No speech detected")
-                self.bc.update_output_label("No speech detected")
-                self.bc.clear_label()
+                self.tk_.update_output_label("No speech detected")
+                self.tk_.clear_label()
+
+    def process_command(self):
+        with sr.Microphone() as source:
+            self.tts("listening")
+            self.tk_.update_output_label("listening")
+            self.tk_.clear_label()
 
             try:
-                command = self.recognizer.recognize_google(audio)
-                self.tts(f"Recognized: {command}")
-                self.bc.update_input_label(f"{command}")
-                self.bc.clear_label()
+                audio = self.recognizer.listen(source)
+                command= self.recognizer.recognize_google(audio)
 
                 if command in self.command_list:
-                    try:
-                        self.tts(f"Opening {command}")
-                        self.bc.update_output_label(f"Opening {command}")
-                        self.bc.clear_label()
-
-                        browser = sp.Popen(self.command_list[command])
-                        browser.wait()
-                    except FileNotFoundError:
-                        self.tts(f"Sorry, {command} is not installed on your computer.")
-                        self.bc.update_output_label(f"Sorry, {command} is not installed on your computer.")
-                        self.bc.clear_label()
+                    sp.Popen(self.command_list[command])
+                    self.tts("Executing command")
+                    self.tk_.update_output_label("Executing command")
+                    self.tk_.clear_label()
                 else:
                     self.tts("Command not recognized")
-                    self.bc.update_output_label("Command not recognized")
-
-            except sr.UnknownValueError:
-                self.tts("Could not understand audio")
-                self.bc.update_output_label("Could not understand audio")
-            except sr.RequestError as e:
-                self.tts(f"Could not request results; {e}")
-                self.bc.update_output_label(f"Could not request results; {e}")
+                    self.tk_.update_output_label("Command not recognized")
+                    self.tk_.clear_label()
+            except sr.WaitTimeoutError:
+                self.tts("No speech detected")
+                self.tk_.update_output_label("No speech detected")
+                self.tk_.clear_label()
