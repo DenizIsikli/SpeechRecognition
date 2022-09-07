@@ -1,5 +1,7 @@
 class CommandList:
     def __init__(self):
+        self.wake_word = "Bobby"
+
         self.command_list = {
             # Browsers
             "Open Firefox": ["firefox"],
