@@ -1,11 +1,13 @@
 import speech_recognition as sr
 import subprocess as sp
+import pyttsx3
 
 
 class Listener:
     def __init__(self):
         self.recognizer = sr.Recognizer()
 
+        # Define a dictionary for commands
         self.command_list = {
             # Browsers
             "Open Firefox": ["firefox"],
@@ -49,6 +51,12 @@ class Listener:
         except OSError:
             return False
 
+    @staticmethod
+    def tts(text):
+        engine = pyttsx3.init()
+        engine.say(text)
+        engine.runAndWait()
+
     def listen(self):
         if not self.has_microphone():
             print("No microphone found. Please connect a microphone.")
@@ -71,9 +79,9 @@ class Listener:
 
                 if command in self.command_list:
                     try:
+                        self.tts(f"Opening {command}")
                         browser = sp.Popen(self.command_list[command])
                         browser.wait()
-
                     except FileNotFoundError:
                         print(f"Sorry, {command} is not installed on your computer. "
                               f"Please install it or use another browser.")
@@ -85,10 +93,7 @@ class Listener:
             except sr.RequestError as e:
                 print(f"Could not request results; {e}")
 
-    def main(self):
-        self.listen()
 
-
-if __name__ == "__main__":
+if __name__ == "__main":
     listener = Listener()
-    listener.main()
+    listener.listen()
