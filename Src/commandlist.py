@@ -1,8 +1,12 @@
+from API import ChatGPT as Gpt
+
+
 class CommandList:
     def __init__(self):
         self.wake_word = "Bobby"
+        self.API = Gpt.ChatGPT().chat_gpt
 
-        self.command_list = {
+        self.regular_command_list = {
             # Browsers
             "Browsers": {
                 "Open Firefox": ["firefox"],
@@ -54,5 +58,12 @@ class CommandList:
                 "Open Google Drive": ["drive.google.com"],
                 "Open Gmail": ["mail.google.com"],
                 "Open Outlook": ["outlook.office.com"],
+            }
+        }
+
+        self.API_command_list = {
+            # Browsers
+            "API": {
+                "GPT Search": self.API
             }
         }
