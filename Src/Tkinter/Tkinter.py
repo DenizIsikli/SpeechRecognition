@@ -1,5 +1,5 @@
 import tkinter as tk
-import time
+import time, datetime
 
 
 class TkinterWindow:
@@ -20,20 +20,25 @@ class TkinterWindow:
         self.output_label = tk.Label(self.tk_, text="", bg="black", fg="white")
         self.output_label.grid(row=0, column=0, padx=10, pady=10)
 
+        self.output_timer_label = tk.Label(self.tk_, text="", bg="black", fg="white")
+        self.output_timer_label.grid(row=1, column=0, padx=10, pady=10)
+
         self.input_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.input_label.grid(row=1, column=0, padx=10, pady=10)
+        self.input_label.grid(row=2, column=0, padx=10, pady=10)
+
+        self.input_timer_label = tk.Label(self.tk_, text="", bg="black", fg="white")
+        self.input_timer_label.grid(row=3, column=0, padx=10, pady=10)
 
     def update_output_label(self, text):
         if text:
             self.output_label.configure(text=text)
+            self.output_timer_label.configure(text=f"Output label updated at: "
+                                                   f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}")
             self.tk_.update()
 
     def update_input_label(self, text):
         if text:
             self.input_label.configure(text=text)
+            self.input_timer_label.configure(text=f"Input label updated at: "
+                                                  f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}")
             self.tk_.update()
-
-    def clear_label(self):
-        time.sleep(2)
-        self.output_label.configure(text="")
-        self.tk_.update()
