@@ -18,8 +18,10 @@ class Listener:
         self.tts = self.tts_.tts
 
         # Define a dictionary for commands
-        self.command_list_ = cl.CommandList()
-        self.command_list = self.command_list_.command_list
+        self.command_list_class = cl.CommandList()
+
+        self.regular_command_list = self.command_list_class.regular_command_list
+        self.API_command_list = self.command_list_class.API_command_list
 
     @staticmethod
     def has_microphone():
@@ -47,7 +49,7 @@ class Listener:
                 audio = self.recognizer.listen(source)
                 call_assistant = self.recognizer.recognize_google(audio)
 
-                if self.command_list_.wake_word in call_assistant:
+                if self.regular_command_list.wake_word in call_assistant:
                     self.process_command()
                     self.tts("Assistant is ready")
                     self.tk_.update_output_label("Assistant is ready")
@@ -71,8 +73,13 @@ class Listener:
                 audio = self.recognizer.listen(source)
                 command = self.recognizer.recognize_google(audio)
 
-                if command in self.command_list:
-                    sp.Popen(self.command_list[command])
+                if command in self.regular_command_list:
+                    sp.Popen(self.regular_command_list[command])
+                    self.tts("Executing command")
+                    self.tk_.update_output_label("Executing command")
+                    self.tk_.clear_label()
+                elif command in self.API_command_list:
+                    sp.Popen(self.API_command_list[command])
                     self.tts("Executing command")
                     self.tk_.update_output_label("Executing command")
                     self.tk_.clear_label()
