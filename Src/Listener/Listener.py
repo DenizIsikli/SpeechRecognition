@@ -8,7 +8,7 @@ from Tkinter import Tkinter as Tk
 class Listener:
     def __init__(self):
         # Tkinter configuration
-        self.tk_ = Tk.TkinterWindow()
+        self.tk = Tk.TkinterWindow()
 
         # Text to speech configuration
         self.recognizer = sr.Recognizer()
@@ -35,15 +35,13 @@ class Listener:
     def listen(self):
         if not self.has_microphone():
             self.tts("No microphone detected")
-            self.tk_.update_output_label("No microphone detected")
-            self.tk_.clear_label()
+            self.tk.update_output_label("No microphone detected")
 
         microphone_index = 0
 
         with sr.Microphone(device_index=microphone_index) as source:
             self.tts("Call Bobby to start the program")
-            self.tk_.update_output_label("Call Bobby to start the program")
-            self.tk_.clear_label()
+            self.tk.update_output_label("Call Bobby to start the program")
 
             try:
                 audio = self.recognizer.listen(source)
@@ -52,22 +50,18 @@ class Listener:
                 if self.regular_command_list.wake_word in call_assistant:
                     self.process_command()
                     self.tts("Assistant is ready")
-                    self.tk_.update_output_label("Assistant is ready")
-                    self.tk_.clear_label()
+                    self.tk.update_output_label("Assistant is ready")
                 else:
                     self.tts("Wake word not recognized")
-                    self.tk_.update_output_label("Wake word not recognized")
-                    self.tk_.clear_label()
+                    self.tk.update_output_label("Wake word not recognized")
             except sr.WaitTimeoutError:
                 self.tts("No speech detected")
-                self.tk_.update_output_label("No speech detected")
-                self.tk_.clear_label()
+                self.tk.update_output_label("No speech detected")
 
     def process_command(self):
         with sr.Microphone() as source:
             self.tts("listening")
-            self.tk_.update_output_label("listening")
-            self.tk_.clear_label()
+            self.tk.update_output_label("listening")
 
             try:
                 audio = self.recognizer.listen(source)
@@ -76,18 +70,16 @@ class Listener:
                 if command in self.regular_command_list:
                     sp.Popen(self.regular_command_list[command])
                     self.tts("Executing command")
-                    self.tk_.update_output_label("Executing command")
-                    self.tk_.clear_label()
+                    self.tk.update_input_label(command)
+                    self.tk.update_output_label("Executing command")
                 elif command in self.API_command_list:
-                    sp.Popen(self.API_command_list[command])
+                    self.API_command_list[command]()
                     self.tts("Executing command")
-                    self.tk_.update_output_label("Executing command")
-                    self.tk_.clear_label()
+                    self.tk.update_input_label(command)
+                    self.tk.update_output_label("Executing command")
                 else:
                     self.tts("Command not recognized")
-                    self.tk_.update_output_label("Command not recognized")
-                    self.tk_.clear_label()
+                    self.tk.update_output_label("Command not recognized")
             except sr.WaitTimeoutError:
                 self.tts("No speech detected")
-                self.tk_.update_output_label("No speech detected")
-                self.tk_.clear_label()
+                self.tk.update_output_label("No speech detected")
