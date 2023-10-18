@@ -16,7 +16,6 @@ class ChatGPT:
         if command is None:
             self.tts("Please provide text when using the command")
             self.tk_.output_label("Please provide text when using the command")
-            self.tk_.clear_label()
 
         try:
             headers = {
@@ -36,9 +35,7 @@ class ChatGPT:
 
                     self.tts(ai_response)
                     self.tk_.output_label(ai_response)
-                    self.tk_.clear_label()
 
         except Exception as e:
             self.tts(f"An error occurred: {e}")
             self.tk_.output_label(f"An error occurred: {e}")
-            self.tk_.clear_label()
