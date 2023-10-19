@@ -46,11 +46,11 @@ class TkinterWindow:
         # Attach a callback to the variable to apply the selected voice
         self.selected_voice.trace("w", self.apply_selected_voice)
 
-    def apply_selected_voice(self):
+    def apply_selected_voice(self, *_):
         voice_index = self.selected_voice.get()
-
         text_to_speech = TTS.Texttospeech.TextToSpeech()
-        text_to_speech.list_voices_from_registry(voice=int(voice_index))
+        default_text = "Default"
+        text_to_speech.tts(text=default_text, voice=voice_index)
 
     def update_output_label(self, text):
         if text:
