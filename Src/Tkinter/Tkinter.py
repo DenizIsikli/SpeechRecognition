@@ -1,5 +1,7 @@
 import tkinter as tk
-import time, datetime
+import datetime
+
+import TTS.Texttospeech
 
 
 class TkinterWindow:
@@ -28,6 +30,27 @@ class TkinterWindow:
 
         self.input_timer_label = tk.Label(self.tk_, text="", bg="black", fg="white")
         self.input_timer_label.grid(row=3, column=0, padx=10, pady=10)
+
+        # Dropdown menu (Voice options)
+        self.selected_voice = tk.StringVar(self.tk_)
+        self.selected_voice.set("0")
+
+        self.voice_label = tk.Label(self.tk_, text="Select Voice")
+        self.voice_label.grid(row=4, column=0, padx=10, pady=10)
+
+        voice_options = ("0", "1")
+
+        self.voice_dropdown = tk.OptionMenu(self.tk_, self.selected_voice, *voice_options)
+        self.voice_dropdown.grid(row=4, column=1, padx=10, pady=10)
+
+        # Attach a callback to the variable to apply the selected voice
+        self.selected_voice.trace("w", self.apply_selected_voice)
+
+    def apply_selected_voice(self):
+        voice_index = self.selected_voice.get()
+
+        text_to_speech = TTS.Texttospeech.TextToSpeech()
+        text_to_speech.list_voices_from_registry(voice=int(voice_index))
 
     def update_output_label(self, text):
         if text:
