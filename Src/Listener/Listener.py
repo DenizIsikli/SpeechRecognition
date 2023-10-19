@@ -20,6 +20,7 @@ class Listener:
         # Define a dictionary for commands
         self.command_list_class = cl.CommandList()
 
+        self.wake_word = self.command_list_class.wake_word
         self.regular_command_list = self.command_list_class.regular_command_list
         self.API_command_list = self.command_list_class.API_command_list
 
@@ -47,7 +48,7 @@ class Listener:
                 audio = self.recognizer.listen(source)
                 call_assistant = self.recognizer.recognize_google(audio)
 
-                if self.regular_command_list.wake_word in call_assistant:
+                if self.wake_word in call_assistant:
                     self.process_command()
                     self.tts("Assistant is ready")
                     self.tk.update_output_label("Assistant is ready")
