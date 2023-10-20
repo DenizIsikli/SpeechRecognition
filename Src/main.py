@@ -1,5 +1,9 @@
+from Tkinter import Tkinter as Tk
 from Listener import Listener as Ls
 
 if __name__ == "__main__":
-    listener = Ls.Listener()
-    listener.listen()
+    tk = Tk.TkinterWindow()
+    ls = Ls.Listener()
+
+    tk.run()
+    ls.listen()
