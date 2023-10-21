@@ -5,49 +5,45 @@ import TTS.Texttospeech
 
 
 class TkinterWindow:
-    instance = None
-
-    def __new__(cls):
-        if cls.instance is None:
-            cls.instance = super(TkinterWindow, cls).__new__(cls)
-        return cls.instance
-
     def __init__(self):
-        # Tkinter configuration
         self.tk_ = tk.Tk()
 
         # Make the window 400x400 and place it in the middle of the screen
-        self.tk_.geometry(f"1000x1000+{int(self.tk_.winfo_screenwidth() / 2 - 200)}+"
+        self.tk_.geometry(f"500x500+{int(self.tk_.winfo_screenwidth() / 2 - 200)}+"
                           f"{int(self.tk_.winfo_screenheight() / 2 - 200)}")
         self.tk_.title("Voice Assistant")
         self.tk_.configure(bg="black")
-        self.tk_.option_add("*Foreground", "white")
         self.tk_.option_add("*Font", "TkDefaultFont 12")
+        # self.tk_.overrideredirect(True)
+
+        # Create a frame to center the content
+        content_frame = tk.Frame(self.tk_)
+        content_frame.pack(expand=True)
 
         # Labels
-        self.output_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.output_label.grid(row=0, column=0, padx=10, pady=10)
+        self.output_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.output_label.pack(side=tk.TOP, padx=10, pady=10)
 
-        self.output_timer_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.output_timer_label.grid(row=1, column=0, padx=10, pady=10)
+        self.output_timer_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.output_timer_label.pack(side=tk.TOP, padx=10, pady=10)
 
-        self.input_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.input_label.grid(row=2, column=0, padx=10, pady=10)
+        self.input_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.input_label.pack(side=tk.TOP, padx=10, pady=10)
 
-        self.input_timer_label = tk.Label(self.tk_, text="", bg="black", fg="white")
-        self.input_timer_label.grid(row=3, column=0, padx=10, pady=10)
+        self.input_timer_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.input_timer_label.pack(side=tk.TOP, padx=10, pady=10)
 
         # Dropdown menu (Voice options)
         self.selected_voice = tk.StringVar(self.tk_)
         self.selected_voice.set("0")
 
-        self.voice_label = tk.Label(self.tk_, text="Select Voice")
-        self.voice_label.grid(row=4, column=0, padx=10, pady=10)
+        self.voice_label = tk.Label(content_frame, text="Select Voice")
+        self.voice_label.pack(side=tk.TOP, padx=10, pady=10)
 
         voice_options = ("0", "1")
 
-        self.voice_dropdown = tk.OptionMenu(self.tk_, self.selected_voice, *voice_options)
-        self.voice_dropdown.grid(row=4, column=1, padx=10, pady=10)
+        self.voice_dropdown = tk.OptionMenu(content_frame, self.selected_voice, *voice_options)
+        self.voice_dropdown.pack(side=tk.TOP, padx=10, pady=10)
 
         # Attach a callback to the variable to apply the selected voice
         self.selected_voice.trace("w", self.apply_selected_voice)
