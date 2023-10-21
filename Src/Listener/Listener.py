@@ -3,19 +3,19 @@ import speech_recognition as sr
 import subprocess as sp
 from TTS import Texttospeech as Tts
 import commandlist as cl
-from Tkinter import Tkinter as Tk
 
 
 class Listener:
     instance = None
-    tk = Tk.TkinterWindow()
 
-    def __new__(cls):
+    def __new__(cls, tkinter_instance):
         if cls.instance is None:
             cls.instance = super(Listener, cls).__new__(cls)
         return cls.instance
 
-    def __init__(self):
+    def __init__(self, tkinter_instance):
+        self.tk = tkinter_instance
+
         # Text to speech configuration
         self.recognizer = sr.Recognizer()
 
@@ -24,7 +24,7 @@ class Listener:
         self.tts = self.tts_.tts
 
         # Define a dictionary for commands
-        self.command_list_class = cl.CommandList()
+        self.command_list_class = cl.CommandList(tkinter_instance)
 
         self.wake_word = self.command_list_class.wake_word
         self.regular_command_list = self.command_list_class.regular_command_list
@@ -56,7 +56,6 @@ class Listener:
                 self.tk.update_output_label("No microphone detected")
 
             with sr.Microphone(device_index=self.microphone_index) as source:
-                time.sleep(3)
                 self.tts("Call Bobby to start the program")
                 self.tk.update_output_label("Call Bobby to start the program")
 
@@ -95,8 +94,3 @@ class Listener:
         else:
             self.tts("Command not recognized")
             self.tk.update_output_label("Command not recognized")
-
-
-if __name__ == "__main__":
-    listener = Listener()
-    listener.list_microphone()
