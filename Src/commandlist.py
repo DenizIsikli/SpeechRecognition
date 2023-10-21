@@ -2,9 +2,9 @@ from API import ChatGPT as Gpt
 
 
 class CommandList:
-    def __init__(self):
+    def __init__(self, tkinter_instance):
         self.wake_word = "Bobby"
-        self.API = Gpt.ChatGPT().chat_gpt
+        self.API = Gpt.ChatGPT(tkinter_instance).chat_gpt
 
         self.regular_command_list = {
             # Browsers
