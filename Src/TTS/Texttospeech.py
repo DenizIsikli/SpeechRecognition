@@ -15,8 +15,3 @@ class TextToSpeech:
         engine.say(text)
         engine.runAndWait()
         time.sleep(2)
-
-
-if __name__ == "__main__":
-    tts = TextToSpeech()
-    tts.tts("Dennis was made of poop and brain farts", voice="0")
