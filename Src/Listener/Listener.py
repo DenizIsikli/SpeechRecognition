@@ -1,4 +1,3 @@
-import time
 import speech_recognition as sr
 import subprocess as sp
 from TTS import Texttospeech as Tts
@@ -49,33 +48,13 @@ class Listener:
         for i, microphone in enumerate(mic_list):
             print(f"Microphone: {i} - {microphone}")
 
-    def listen(self):
-        while not self.terminate:
-            if not self.has_microphone():
-                self.tts("No microphone detected")
-                self.tk.update_output_label("No microphone detected")
-
-            with sr.Microphone(device_index=self.microphone_index) as source:
-                self.tts("Call Bobby to start the program")
-                self.tk.update_output_label("Call Bobby to start the program")
-
-                try:
-                    audio = self.recognizer.listen(source)
-                    call_assistant = self.recognizer.recognize_sphinx(audio)
-
-                    if self.wake_word in call_assistant:
-                        self.process_command(call_assistant)
-                        self.tts("Assistant is ready")
-                        self.tk.update_output_label("Assistant is ready")
-                    else:
-                        self.tts("Wake word not recognized")
-                        self.tk.update_output_label("Wake word not recognized")
-                except sr.WaitTimeoutError:
-                    self.tts("No speech detected")
-                    self.tk.update_output_label("No speech detected")
-
-            if call_assistant == "Terminate":
-                self.terminate = True
+    def recognize_speech(self, audio):
+        try:
+            return self.recognizer.recognize_google(audio)
+        except sr.UnknownValueError:
+            return ""
+        except sr.RequestError as e:
+            return f"Speech recognition error: {e}"
 
     def process_command(self, command):
         self.tts("listening")
@@ -94,3 +73,40 @@ class Listener:
         else:
             self.tts("Command not recognized")
             self.tk.update_output_label("Command not recognized")
+
+    def listen(self):
+        while not self.terminate:
+            if not self.has_microphone():
+                self.tts("No microphone detected")
+                self.tk.update_output_label("No microphone detected")
+
+            with sr.Microphone(device_index=self.microphone_index) as source:
+                self.tts("Call Bobby to start the program")
+                self.tk.update_output_label("Call Bobby to start the program")
+
+                try:
+                    audio = self.recognizer.listen(source)
+
+                    call_assistant = self.recognize_speech(audio)
+
+                    if self.wake_word in call_assistant:
+                        self.process_command(call_assistant)
+                        self.tts("Assistant is ready")
+                        self.tk.update_input_label(call_assistant)
+                        self.tk.update_output_label("Assistant is ready")
+                    else:
+                        self.tts("Wake word not recognized")
+                        self.tk.update_output_label("Wake word not recognized")
+                except sr.WaitTimeoutError:
+                    self.tts("No speech detected")
+                    self.tk.update_output_label("No speech detected")
+
+            if call_assistant == "Terminate":
+                self.tts("Terminating program")
+                self.terminate = True
+
+
+if __name__ == "__main__":
+    instance = None
+    ls = Listener(instance)
+    ls.list_microphone()
