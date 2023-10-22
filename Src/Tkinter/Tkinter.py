@@ -6,14 +6,16 @@ import TTS.Texttospeech
 
 class TkinterWindow:
     def __init__(self):
+        self.text_to_speech = TTS.Texttospeech.TextToSpeech()
+
         self.tk_ = tk.Tk()
 
         # Make the window 400x400 and place it in the middle of the screen
         self.tk_.geometry(f"500x500+{int(self.tk_.winfo_screenwidth() / 2 - 200)}+"
                           f"{int(self.tk_.winfo_screenheight() / 2 - 200)}")
         self.tk_.title("Voice Assistant")
-        self.tk_.configure(bg="black")
-        self.tk_.option_add("*Font", "TkDefaultFont 12")
+        self.tk_.configure(bg="white")
+        self.tk_.option_add("*Font", "Courier 12")
         # self.tk_.overrideredirect(True)
 
         # Create a frame to center the content
@@ -21,17 +23,19 @@ class TkinterWindow:
         content_frame.pack(expand=True)
 
         # Labels
-        self.output_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.output_label = tk.Label(content_frame, text="", bg="white", fg="black")
         self.output_label.pack(side=tk.TOP, padx=10, pady=10)
 
-        self.output_timer_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.output_timer_label = tk.Label(content_frame, text="", bg="white", fg="black")
         self.output_timer_label.pack(side=tk.TOP, padx=10, pady=10)
+        self.output_timer_label.config(font=("Courier", 8))
 
-        self.input_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.input_label = tk.Label(content_frame, text="", bg="white", fg="black")
         self.input_label.pack(side=tk.TOP, padx=10, pady=10)
 
-        self.input_timer_label = tk.Label(content_frame, text="", bg="black", fg="white")
+        self.input_timer_label = tk.Label(content_frame, text="", bg="white", fg="black")
         self.input_timer_label.pack(side=tk.TOP, padx=10, pady=10)
+        self.input_timer_label.config(font=("Courier", 8))
 
         # Dropdown menu (Voice options)
         self.selected_voice = tk.StringVar(self.tk_)
@@ -40,6 +44,7 @@ class TkinterWindow:
         self.voice_label = tk.Label(content_frame, text="Select Voice")
         self.voice_label.pack(side=tk.TOP, padx=10, pady=10)
 
+        # 0: Male | 1: Female
         voice_options = ("0", "1")
 
         self.voice_dropdown = tk.OptionMenu(content_frame, self.selected_voice, *voice_options)
@@ -57,9 +62,14 @@ class TkinterWindow:
 
     def apply_selected_voice(self, *_):
         voice_index = self.selected_voice.get()
-        text_to_speech = TTS.Texttospeech.TextToSpeech()
-        default_text = "Default"
-        text_to_speech.tts(text=default_text, voice=voice_index)
+        default_text = ""
+
+        if voice_index == "0":
+            default_text = "Male"
+        elif voice_index == "1":
+            default_text = "female"
+
+        self.text_to_speech.tts(text=default_text, voice=voice_index)
 
     def update_output_label(self, text):
         if text:
