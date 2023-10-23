@@ -49,6 +49,14 @@ class CommandList:
                 "Open IntelliJ": ["intellij"],
                 "Open VS Code": ["code"],
                 "Open Files": ["nautilus"],
+
+                "Open Terminal": ["gnome-terminal"],
+                "Open Calculator": ["gnome-calculator"],
+                "Open Settings": ["gnome-control-center"],
+
+                "Open Command Prompt": ["cmd"],
+                "Open Task Manager": ["gnome-system-monitor"],
+                "Open Control Panel": ["gnome-control-center"],
             },
 
             # University websites
