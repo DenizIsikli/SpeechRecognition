@@ -39,6 +39,15 @@ class CommandList:
                 "Open ChatGPT": ["beta.openai.com"],
             },
 
+            # University websites
+            "University Websites": {
+                "Open DTU Learn": ["learn.inside.dtu.dk"],
+                "Open DTU Inside": ["inside.dtu.dk"],
+                "Open Google Drive": ["drive.google.com"],
+                "Open Gmail": ["mail.google.com"],
+                "Open Outlook": ["outlook.office.com"],
+            },
+
             # Miscellaneous programs
             "Programs": {
                 "Open Spotify": ["spotify"],
@@ -57,15 +66,6 @@ class CommandList:
                 "Open Command Prompt": ["cmd"],
                 "Open Task Manager": ["gnome-system-monitor"],
                 "Open Control Panel": ["gnome-control-center"],
-            },
-
-            # University websites
-            "University Websites": {
-                "Open DTU Learn": ["learn.inside.dtu.dk"],
-                "Open DTU Inside": ["inside.dtu.dk"],
-                "Open Google Drive": ["drive.google.com"],
-                "Open Gmail": ["mail.google.com"],
-                "Open Outlook": ["outlook.office.com"],
             }
         }
 
