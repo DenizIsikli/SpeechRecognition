@@ -37,6 +37,9 @@ class CommandList:
                 "Open Google Translate": ["translate.google.com"],
                 "Open LinkedIn": ["www.linkedin.com"],
                 "Open ChatGPT": ["beta.openai.com"],
+                "Open StackOverflow": ["stackoverflow.com"],
+                "Open Quora": ["www.quora.com"],
+                "Open LeetCode": ["leetcode.com"],
             },
 
             # University websites
