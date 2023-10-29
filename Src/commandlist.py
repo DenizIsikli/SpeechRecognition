@@ -40,6 +40,7 @@ class CommandList:
                 "Open StackOverflow": ["stackoverflow.com"],
                 "Open Quora": ["www.quora.com"],
                 "Open LeetCode": ["leetcode.com"],
+                "Open Poe": ["https://poe.com"],
             },
 
             # University websites
