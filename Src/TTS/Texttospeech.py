@@ -14,4 +14,4 @@ class TextToSpeech:
         engine.setProperty('volume', float(self.volume))
         engine.say(text)
         engine.runAndWait()
-        time.sleep(2)
+        time.sleep(2.5)
