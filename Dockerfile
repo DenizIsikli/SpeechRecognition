@@ -5,7 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 # Copy the contents of your project into the container
-COPY . /app
+COPY Src /app
 
 # Install any Python dependencies using pip
 RUN pip install --no-cache-dir -r /app/Dependencies/requirements.txt
