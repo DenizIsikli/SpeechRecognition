@@ -1,12 +1,8 @@
-from API import ChatGPT as Gpt
-
-
 class CommandList:
-    def __init__(self, tkinter_instance):
+    def __init__(self):
         self.wake_word = "Bobby"
-        self.API = Gpt.ChatGPT(tkinter_instance).chat_gpt
 
-        self.regular_command_list = {
+        self.command_list = {
             # Browsers
             "Browsers": {
                 "Open Firefox": ["firefox"],
@@ -70,12 +66,5 @@ class CommandList:
                 "Open Command Prompt": ["cmd"],
                 "Open Task Manager": ["gnome-system-monitor"],
                 "Open Control Panel": ["gnome-control-center"],
-            }
-        }
-
-        self.API_command_list = {
-            # Browsers
-            "API": {
-                "GPT Search": self.API
             }
         }

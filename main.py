@@ -1,14 +1,12 @@
-from Tkinter import Tkinter as Tk
-from Listener import Listener as Ls
+from PygameWindow import PygameWindow
+import Listener as Ls
 import threading
 
 if __name__ == "__main__":
-    tk = Tk.TkinterWindow()
-    ls = Ls.Listener(tk)
+    pg_window = PygameWindow()
+    ls = Ls.Listener(pg_window)
 
-    # Create a thread to run the listener
-    listener_thread = threading.Thread(target=ls.listen)
-
+    listener_thread = threading.Thread(target=ls.listen, daemon=True)
     listener_thread.start()
 
-    tk.run()
+    pg_window.run()
